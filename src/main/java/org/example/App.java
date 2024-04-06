@@ -23,24 +23,26 @@ public class App {
                 .forEach(name -> poker.addPlayer(new PokerPlayer(name)));
 
         poker.shuffleDeck();
-        poker.dealInitialHand();
+        poker.deal();
         poker.showHands();
         poker.evaluateHands();
         poker.showDiscardPile();
 
-        poker.determineWinner().ifPresent(winner -> {
-            log.info("Winner: {}", winner.getName());
-            log.info("Hand: {} ({})", winner.showHand(), winner.evaluateHand().getDescription());
-        });
+        poker.determineWinner()
+                .ifPresent(winner -> {
+                    log.info("Winner: {}", winner.getName());
+                    log.info("Hand: {} ({})", winner.showHand(), winner.evaluateHand().getDescription());
+                });
     }
 
     public static void playHearts() {
         log.info("Playing Hearts...");
         HeartsEngine hearts = new HeartsEngine();
 
-        List.of("Bob", "Alice", "Charlie", "David")
+        List.of("Alice", "Bob", "Charlie", "David")
                 .forEach(name -> hearts.addPlayer(new HeartsPlayer(name)));
 
+        hearts.shuffleDeck();
         hearts.deal();
         hearts.showHands();
 

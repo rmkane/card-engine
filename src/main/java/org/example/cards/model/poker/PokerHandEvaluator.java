@@ -1,6 +1,7 @@
 package org.example.cards.model.poker;
 
 import org.example.cards.model.Card;
+import org.example.cards.model.CardHandEvaluator;
 import org.example.cards.model.Rank;
 import org.example.cards.model.Suit;
 import org.example.cards.util.CardUtils;
@@ -9,8 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class PokerHandEvaluator {
-    public static PokerHandType evaluateHand(List<PokerCard> hand) {
+public class PokerHandEvaluator implements CardHandEvaluator<PokerCard, PokerHandType> {
+    @Override
+    public PokerHandType evaluateHand(List<PokerCard> hand) {
         // Sort the hand by rank
         CardUtils.sortHandByRankThenSuit(hand);
 

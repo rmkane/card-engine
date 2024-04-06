@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-public class PokerEngine {
+public class PokerEngine implements CardEngine<PokerCard, PokerPlayer> {
     private static final int HAND_SIZE = 5;
 
     private final List<PokerPlayer> players;
@@ -27,15 +27,18 @@ public class PokerEngine {
         this.discardPile = new ArrayList<>();
     }
 
+    @Override
     public void addPlayer(PokerPlayer player) {
         players.add(player);
     }
 
+    @Override
     public void shuffleDeck() {
         deck.shuffle();
     }
 
-    public void dealInitialHand() {
+    @Override
+    public void deal() {
         for (int i = 0; i < HAND_SIZE; i++) {
             for (PokerPlayer player : players) {
                 player.drawCard(deck.deal());
@@ -47,6 +50,7 @@ public class PokerEngine {
         discardPile.add(card);
     }
 
+    @Override
     public void showHands() {
         for (PokerPlayer player : players) {
             player.sortHand();
@@ -58,6 +62,7 @@ public class PokerEngine {
         log.debug("Discard pile: {}", CardUtils.formatHand(discardPile));
     }
 
+    @Override
     public Optional<PokerPlayer> determineWinner() {
         return players.stream().max(Comparator.comparing(PokerPlayer::getHandRank));
     }

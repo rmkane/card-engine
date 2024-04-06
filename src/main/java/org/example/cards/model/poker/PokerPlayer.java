@@ -10,6 +10,8 @@ import java.util.List;
 
 @Getter
 public class PokerPlayer implements CardPlayer<PokerCard> {
+    private final static PokerHandEvaluator handEvaluator = new PokerHandEvaluator();
+
     private final String name;
     private final List<PokerCard> hand;
 
@@ -35,7 +37,7 @@ public class PokerPlayer implements CardPlayer<PokerCard> {
 
     @Override
     public int getScore() {
-        return PokerHandEvaluator.evaluateHand(hand).ordinal();
+        return evaluateHand().ordinal();
     }
 
     @Override
@@ -44,7 +46,7 @@ public class PokerPlayer implements CardPlayer<PokerCard> {
     }
 
     public PokerHandType evaluateHand() {
-        return PokerHandEvaluator.evaluateHand(hand);
+        return handEvaluator.evaluateHand(hand);
     }
 
     public List<PokerCard> decideCardsToDiscard() {

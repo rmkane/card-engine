@@ -9,8 +9,10 @@ import java.util.List;
 
 @Getter
 public class HeartsPlayer implements CardPlayer<HeartsCard> {
-    String name;
-    List<HeartsCard> hand;
+    private final static HeartsHandEvaluator handEvaluator = new HeartsHandEvaluator();
+
+    private final String name;
+    private final List<HeartsCard> hand;
 
     public HeartsPlayer(String name) {
         this.name = name;
@@ -34,14 +36,16 @@ public class HeartsPlayer implements CardPlayer<HeartsCard> {
 
     @Override
     public int getScore() {
-        return hand.stream()
-                .mapToInt(HeartsCard::getValue)
-                .sum();
+        return handEvaluator.evaluateHand(hand);
     }
 
     @Override
     public String showHand() {
         return CardUtils.formatHand(hand);
+    }
+
+    public Integer evaluateHand() {
+        return handEvaluator.evaluateHand(hand);
     }
 
     @Override

@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CardUtils {
-    public static String formatCard(Card card) {
+    public static <E extends Card> String formatCard(E card) {
         return String.format("%s%s", card.getRank().getSymbol(), card.getSuit().getSymbol());
     }
 

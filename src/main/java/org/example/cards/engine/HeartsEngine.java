@@ -12,23 +12,29 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-public class HeartsEngine {
+public class HeartsEngine implements CardEngine<HeartsCard, HeartsPlayer> {
     private static final int NUM_CARDS = 13;
 
     private final List<HeartsPlayer> players;
     private final Deck<HeartsCard> deck;
 
     public HeartsEngine() {
-        deck = new HeartsDeck();
-        players = new ArrayList<>();
+        this.deck = new HeartsDeck();
+        this.players = new ArrayList<>();
     }
 
+    @Override
     public void addPlayer(HeartsPlayer player) {
         players.add(player);
     }
 
-    public void deal() {
+    @Override
+    public void shuffleDeck() {
         deck.shuffle();
+    }
+
+    @Override
+    public void deal() {
         for (int i = 0; i < NUM_CARDS; i++) {
             for (HeartsPlayer player : players) {
                 player.getHand().add(deck.deal());
@@ -36,6 +42,7 @@ public class HeartsEngine {
         }
     }
 
+    @Override
     public void showHands() {
         players.forEach(player -> {
             player.sortHand();
@@ -43,6 +50,7 @@ public class HeartsEngine {
         });
     }
 
+    @Override
     public Optional<HeartsPlayer> determineWinner() {
         return players.stream()
                 .max(Comparator.comparingInt(HeartsPlayer::getScore));

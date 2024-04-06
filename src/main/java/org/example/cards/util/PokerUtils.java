@@ -13,8 +13,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PokerUtils {
+    private final static PokerHandEvaluator handEvaluator = new PokerHandEvaluator();
+
     public static List<PokerCard> decideCardsToDiscard(List<PokerCard> hand) {
-        PokerHandType handType = PokerHandEvaluator.evaluateHand(hand);
+        PokerHandType handType = handEvaluator.evaluateHand(hand);
         Map<Rank, Long> rankCounts = hand.stream()
                 .collect(Collectors.groupingBy(Card::getRank, Collectors.counting()));
 
@@ -56,7 +58,12 @@ public class PokerUtils {
                         .filter(card -> !card.getRank().equals(threeOfAKindRank))
                         .toList();
             }
-            case STRAIGHT, FLUSH, FULL_HOUSE, FOUR_OF_A_KIND, STRAIGHT_FLUSH, ROYAL_FLUSH -> Collections.emptyList();
+            case STRAIGHT,
+                 FLUSH,
+                 FULL_HOUSE,
+                 FOUR_OF_A_KIND,
+                 STRAIGHT_FLUSH,
+                 ROYAL_FLUSH -> Collections.emptyList();
         };
     }
 }
