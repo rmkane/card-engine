@@ -2,14 +2,14 @@ package org.example.cards.model;
 
 import java.util.List;
 
-public interface CardPlayer<T extends Card> {
+public interface CardPlayer<C extends Card> {
     String getName();
 
-    List<T> getHand();
+    List<C> getHand();
 
-    void drawCard(T card);
+    void drawCard(C card);
 
-    void discardCard(T card);
+    void discardCard(C card);
 
     void sortHand();
 

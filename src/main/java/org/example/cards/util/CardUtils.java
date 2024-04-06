@@ -45,7 +45,8 @@ public class CardUtils {
                 .flatMap(suit -> Stream.of(Rank.values())
                         .map(rank -> {
                             try {
-                                return cardType.getDeclaredConstructor(Suit.class, Rank.class).newInstance(suit, rank);
+                                return cardType.getDeclaredConstructor(Suit.class, Rank.class)
+                                        .newInstance(suit, rank);
                             } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }

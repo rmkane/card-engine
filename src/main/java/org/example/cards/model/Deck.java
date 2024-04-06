@@ -1,7 +1,7 @@
 package org.example.cards.model;
 
-public interface Deck<T extends Card> {
+public interface Deck<C extends Card> {
     void shuffle();
 
-    T deal();
+    C deal();
 }
