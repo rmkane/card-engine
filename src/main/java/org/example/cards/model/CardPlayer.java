@@ -7,7 +7,7 @@ public interface CardPlayer<C extends Card> {
 
     List<C> getHand();
 
-    void drawCard(C card);
+    void acceptCard(C card);
 
     void discardCard(C card);
 

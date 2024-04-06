@@ -1,8 +1,10 @@
 package org.example;
 
 import lombok.extern.slf4j.Slf4j;
+import org.example.cards.engine.BlackjackEngine;
 import org.example.cards.engine.HeartsEngine;
 import org.example.cards.engine.PokerEngine;
+import org.example.cards.model.blackjack.BlackjackPlayer;
 import org.example.cards.model.hearts.HeartsPlayer;
 import org.example.cards.model.poker.PokerPlayer;
 
@@ -11,8 +13,28 @@ import java.util.List;
 @Slf4j
 public class App {
     public static void main(String[] args) {
+        playBlackjack();
         playPoker();
         playHearts();
+    }
+
+    public static void playBlackjack() {
+        log.info("Playing Blackjack...");
+        BlackjackEngine blackjack = new BlackjackEngine();
+
+        List.of("Alice", "Bob", "Charlie", "David")
+                .forEach(name -> blackjack.addPlayer(new BlackjackPlayer(name)));
+
+        blackjack.shuffleDeck();
+        blackjack.deal();
+        blackjack.showHands();
+        blackjack.evaluateHands();
+
+        blackjack.determineWinner()
+                .ifPresent(winner -> {
+                    log.info("Winner: {}", winner.getName());
+                    log.info("Hand: {} ({})", winner.showHand(), winner.evaluateHand());
+                });
     }
 
     public static void playPoker() {

@@ -1,19 +1,19 @@
-package org.example.cards.model.hearts;
+package org.example.cards.model.blackjack;
 
 import lombok.Value;
 import org.example.cards.model.Card;
 import org.example.cards.model.Rank;
 import org.example.cards.model.Suit;
+import org.example.cards.util.BlackjackUtils;
 import org.example.cards.util.CardUtils;
-import org.example.cards.util.HeartsUtils;
 
 @Value
-public class HeartsCard implements Card {
+public class BlackjackCard implements Card {
     Suit suit;
     Rank rank;
 
-    int getValue() {
-        return HeartsUtils.getCardValue(this);
+    public int getValue() {
+        return BlackjackUtils.getCardValue(this);
     }
 
     @Override

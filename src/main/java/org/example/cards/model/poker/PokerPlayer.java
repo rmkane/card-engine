@@ -17,11 +17,11 @@ public class PokerPlayer implements CardPlayer<PokerCard> {
 
     public PokerPlayer(String name) {
         this.name = name;
-        hand = new ArrayList<>();
+        this.hand = new ArrayList<>();
     }
 
     @Override
-    public void drawCard(PokerCard card) {
+    public void acceptCard(PokerCard card) {
         hand.add(card);
     }
 

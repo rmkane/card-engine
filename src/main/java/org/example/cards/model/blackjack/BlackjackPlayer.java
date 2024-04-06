@@ -1,4 +1,4 @@
-package org.example.cards.model.hearts;
+package org.example.cards.model.blackjack;
 
 import lombok.Getter;
 import org.example.cards.model.CardPlayer;
@@ -8,30 +8,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class HeartsPlayer implements CardPlayer<HeartsCard> {
-    private final static HeartsHandEvaluator handEvaluator = new HeartsHandEvaluator();
+public class BlackjackPlayer implements CardPlayer<BlackjackCard> {
+    private final static BlackjackHandEvaluator handEvaluator = new BlackjackHandEvaluator();
 
     private final String name;
-    private final List<HeartsCard> hand;
+    private final List<BlackjackCard> hand;
 
-    public HeartsPlayer(String name) {
+    public BlackjackPlayer(String name) {
         this.name = name;
         this.hand = new ArrayList<>();
     }
 
     @Override
-    public void acceptCard(HeartsCard card) {
+    public void acceptCard(BlackjackCard card) {
         hand.add(card);
     }
 
     @Override
-    public void discardCard(HeartsCard card) {
-        hand.remove(card);
+    public void discardCard(BlackjackCard card) {
+        throw new UnsupportedOperationException("Cannot discard cards in Blackjack");
     }
 
     @Override
     public void sortHand() {
-        CardUtils.sortHandBySuitThenRank(hand);
+        // no-op
     }
 
     @Override
@@ -50,6 +50,10 @@ public class HeartsPlayer implements CardPlayer<HeartsCard> {
 
     @Override
     public String toString() {
-        return String.format("%s: %s (%d)", name, showHand(), getScore());
+        return String.format("%s: %s (%s)", name, showHand(), handEvaluator.getHandType(hand));
+    }
+
+    public boolean didBust() {
+        return handEvaluator.isBust(hand);
     }
 }

@@ -41,7 +41,7 @@ public class PokerEngine implements CardEngine<PokerCard, PokerPlayer> {
     public void deal() {
         for (int i = 0; i < HAND_SIZE; i++) {
             for (PokerPlayer player : players) {
-                player.drawCard(deck.deal());
+                player.acceptCard(deck.deal());
             }
         }
     }
@@ -78,7 +78,7 @@ public class PokerEngine implements CardEngine<PokerCard, PokerPlayer> {
                 discardCard(card);
             }
             for (int i = 0; i < cardsToDraw; i++) {
-                player.drawCard(deck.deal());
+                player.acceptCard(deck.deal());
             }
             log.info("New hand: {} ({})", player.showHand(), player.evaluateHand().getDescription());
         }
