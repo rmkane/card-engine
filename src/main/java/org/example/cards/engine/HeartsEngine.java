@@ -1,7 +1,6 @@
 package org.example.cards.engine;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.cards.model.CardDeck;
 import org.example.cards.model.hearts.HeartsCard;
 import org.example.cards.model.hearts.HeartsDeck;
 import org.example.cards.model.hearts.HeartsHand;
@@ -17,7 +16,7 @@ public class HeartsEngine implements CardEngine<HeartsCard, HeartsHand, HeartsPl
     private static final int NUM_CARDS = 13;
 
     private final List<HeartsPlayer> players;
-    private final CardDeck<HeartsCard> deck;
+    private final HeartsDeck deck;
 
     public HeartsEngine() {
         this.deck = new HeartsDeck();

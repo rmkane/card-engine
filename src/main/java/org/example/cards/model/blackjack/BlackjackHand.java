@@ -9,6 +9,8 @@ import java.util.List;
 
 @Getter
 public class BlackjackHand implements CardHand<BlackjackCard> {
+    private static final BlackjackHandEvaluator handEvaluator = new BlackjackHandEvaluator();
+
     private final List<BlackjackCard> cards;
 
     public BlackjackHand() {
@@ -40,7 +42,7 @@ public class BlackjackHand implements CardHand<BlackjackCard> {
     }
 
     public Integer evaluateHand() {
-        return new BlackjackHandEvaluator().evaluateHand(this);
+        return handEvaluator.evaluateHand(this);
     }
 
     @Override

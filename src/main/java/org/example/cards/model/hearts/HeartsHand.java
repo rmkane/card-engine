@@ -9,6 +9,8 @@ import java.util.List;
 
 @Getter
 public class HeartsHand implements CardHand<HeartsCard> {
+    private static final HeartsHandEvaluator handEvaluator = new HeartsHandEvaluator();
+
     private final List<HeartsCard> cards;
 
     public HeartsHand() {
@@ -40,7 +42,7 @@ public class HeartsHand implements CardHand<HeartsCard> {
     }
 
     public Integer evaluateHand() {
-        return new HeartsHandEvaluator().evaluateHand(this);
+        return handEvaluator.evaluateHand(this);
     }
 
     @Override

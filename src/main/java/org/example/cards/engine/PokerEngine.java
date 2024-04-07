@@ -2,7 +2,6 @@ package org.example.cards.engine;
 
 import lombok.extern.slf4j.Slf4j;
 import org.example.cards.model.Card;
-import org.example.cards.model.CardDeck;
 import org.example.cards.model.poker.PokerCard;
 import org.example.cards.model.poker.PokerDeck;
 import org.example.cards.model.poker.PokerHand;
@@ -21,7 +20,7 @@ public class PokerEngine implements CardEngine<PokerCard, PokerHand, PokerPlayer
     private static final PokerPlayerComparator playerComparator = new PokerPlayerComparator();
 
     private final List<PokerPlayer> players;
-    private final CardDeck<PokerCard> deck;
+    private final PokerDeck deck;
     private final List<Card> discardPile;
 
     public PokerEngine() {

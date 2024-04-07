@@ -1,7 +1,6 @@
 package org.example.cards.engine;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.cards.model.CardDeck;
 import org.example.cards.model.blackjack.BlackjackCard;
 import org.example.cards.model.blackjack.BlackjackDeck;
 import org.example.cards.model.blackjack.BlackjackHand;
@@ -18,7 +17,7 @@ public class BlackjackEngine implements CardEngine<BlackjackCard, BlackjackHand,
     private static final int NUM_CARDS = 2;
 
     private final List<BlackjackPlayer> players;
-    private final CardDeck<BlackjackCard> deck;
+    private final BlackjackDeck deck;
 
     public BlackjackEngine() {
         this.deck = new BlackjackDeck();

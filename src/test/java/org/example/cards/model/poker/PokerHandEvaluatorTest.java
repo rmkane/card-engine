@@ -7,7 +7,6 @@ import java.util.Comparator;
 import java.util.List;
 
 public class PokerHandEvaluatorTest {
-    private final PokerHandEvaluator handEvaluator = new PokerHandEvaluator();
     private final Comparator<PokerHand> handComparator = new PokerHandComparator();
 
     @Test
@@ -28,13 +27,14 @@ public class PokerHandEvaluatorTest {
                         "A♥ 2♠ 3♠ 4♠ 5♠"  // High Card
 
                 ).stream()
-                .map(hand -> new ArrayList<>(PokerCard.fromCardSymbols(hand)))
+                .map(PokerCard::fromCardSymbols)
+                .map(ArrayList::new)
                 .map(PokerHand::new)
                 .sorted(handComparator)
                 .toList();
 
         for (PokerHand hand : hands) {
-            PokerHandType handType = handEvaluator.evaluateHand(hand);
+            PokerHandType handType = hand.evaluateHand();
             System.out.printf("%s (%s)%n", hand, handType);
         }
     }

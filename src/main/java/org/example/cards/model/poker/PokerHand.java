@@ -9,6 +9,8 @@ import java.util.List;
 
 @Getter
 public class PokerHand implements CardHand<PokerCard> {
+    private static final PokerHandEvaluator handEvaluator = new PokerHandEvaluator();
+
     private final List<PokerCard> cards;
 
     public PokerHand() {
@@ -40,7 +42,7 @@ public class PokerHand implements CardHand<PokerCard> {
     }
 
     public PokerHandType evaluateHand() {
-        return new PokerHandEvaluator().evaluateHand(this);
+        return handEvaluator.evaluateHand(this);
     }
 
     @Override
