@@ -1,9 +1,10 @@
 package org.example.cards.engine;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.cards.model.Deck;
+import org.example.cards.model.CardDeck;
 import org.example.cards.model.blackjack.BlackjackCard;
 import org.example.cards.model.blackjack.BlackjackDeck;
+import org.example.cards.model.blackjack.BlackjackHand;
 import org.example.cards.model.blackjack.BlackjackPlayer;
 
 import java.util.ArrayList;
@@ -13,11 +14,11 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 @Slf4j
-public class BlackjackEngine implements CardEngine<BlackjackCard, BlackjackPlayer> {
+public class BlackjackEngine implements CardEngine<BlackjackCard, BlackjackHand, BlackjackPlayer> {
     private static final int NUM_CARDS = 2;
 
     private final List<BlackjackPlayer> players;
-    private final Deck<BlackjackCard> deck;
+    private final CardDeck<BlackjackCard> deck;
 
     public BlackjackEngine() {
         this.deck = new BlackjackDeck();
@@ -38,7 +39,7 @@ public class BlackjackEngine implements CardEngine<BlackjackCard, BlackjackPlaye
     public void deal() {
         for (int i = 0; i < NUM_CARDS; i++) {
             for (BlackjackPlayer player : players) {
-                player.getHand().add(deck.deal());
+                player.acceptCard(deck.deal());
             }
         }
     }
@@ -59,8 +60,29 @@ public class BlackjackEngine implements CardEngine<BlackjackCard, BlackjackPlaye
     }
 
     public void evaluateHands() {
-        players.forEach(player -> {
-            log.info("{}: {} ({})", player.getName(), player.showHand(), player.getScore());
-        });
+        for (BlackjackPlayer player : players) {
+            log.info("{}'s hand: {} ({})", player.getName(), player.showHand(), player.evaluateHand());
+
+            int score = player.getScore();
+
+            while (shouldHit(score)) {
+                BlackjackCard card = deck.deal();
+                log.info("{} hits and receives a {}", player.getName(), card);
+                player.acceptCard(card);
+                score = player.getScore();
+            }
+
+            if (player.didBust()) {
+                log.info("{} busts!", player.getName());
+            }
+
+            if (player.getHand().getCardCount() > 2) {
+                log.info("New hand: {} ({})", player.showHand(), player.evaluateHand());
+            }
+        }
+    }
+
+    private boolean shouldHit(int score) {
+        return score < 17;
     }
 }

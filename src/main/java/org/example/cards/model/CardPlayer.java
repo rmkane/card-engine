@@ -1,11 +1,13 @@
 package org.example.cards.model;
 
-import java.util.List;
-
-public interface CardPlayer<C extends Card> {
+public interface CardPlayer<C extends Card, H extends CardHand<C>> {
     String getName();
 
-    List<C> getHand();
+    CardHand getHand();
+
+    void setDealer(boolean dealer);
+
+    boolean isDealer();
 
     void acceptCard(C card);
 

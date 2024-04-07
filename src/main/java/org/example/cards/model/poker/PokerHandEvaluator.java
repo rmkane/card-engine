@@ -6,13 +6,12 @@ import org.example.cards.model.Rank;
 import org.example.cards.model.Suit;
 import org.example.cards.util.CardUtils;
 
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class PokerHandEvaluator implements CardHandEvaluator<PokerCard, PokerHandType> {
+public class PokerHandEvaluator implements CardHandEvaluator<PokerCard, PokerHand, PokerHandType> {
     @Override
-    public PokerHandType evaluateHand(List<PokerCard> hand) {
+    public PokerHandType evaluateHand(PokerHand hand) {
         // Sort the hand by rank
         CardUtils.sortHandByRankThenSuit(hand);
 
@@ -29,52 +28,53 @@ public class PokerHandEvaluator implements CardHandEvaluator<PokerCard, PokerHan
         return PokerHandType.HIGH_CARD;
     }
 
-    private static boolean isRoyalFlush(List<PokerCard> hand) {
-        return isStraightFlush(hand) && hand.getLast().getRank() == Rank.ACE;
+    private static boolean isRoyalFlush(PokerHand hand) {
+        return isStraightFlush(hand) && hand.getCards().getLast().getRank() == Rank.ACE;
     }
 
-    private static boolean isStraightFlush(List<PokerCard> hand) {
+    private static boolean isStraightFlush(PokerHand hand) {
         return isStraight(hand) && isFlush(hand);
     }
 
-    private static boolean isFourOfAKind(List<PokerCard> hand) {
+    private static boolean isFourOfAKind(PokerHand hand) {
         return getRankCounts(hand).containsValue(4);
     }
 
-    private static boolean isFullHouse(List<PokerCard> hand) {
+    private static boolean isFullHouse(PokerHand hand) {
         Map<Rank, Integer> rankCounts = getRankCounts(hand);
         return rankCounts.containsValue(3) && rankCounts.containsValue(2);
     }
 
-    private static boolean isFlush(List<PokerCard> hand) {
-        final Suit firstSuit = hand.getFirst().getSuit();
-        return hand.stream().allMatch(card -> card.getSuit() == firstSuit);
+    private static boolean isFlush(PokerHand hand) {
+        final Suit firstSuit = hand.getCards().getFirst().getSuit();
+        return hand.getCards().stream().allMatch(card -> card.getSuit() == firstSuit);
     }
 
-    private static boolean isStraight(List<PokerCard> hand) {
-        for (int i = 0; i < hand.size() - 1; i++) {
-            if (hand.get(i).getRank().ordinal() + 1 != hand.get(i + 1).getRank().ordinal()) {
+    private static boolean isStraight(PokerHand hand) {
+        for (int i = 0; i < hand.getCardCount() - 1; i++) {
+            if (hand.getCards().get(i).getRank().ordinal() + 1 != hand.getCards().get(i + 1).getRank().ordinal()) {
                 return false;
             }
         }
         return true;
     }
 
-    private static boolean isThreeOfAKind(List<PokerCard> hand) {
+    private static boolean isThreeOfAKind(PokerHand hand) {
         Map<Rank, Integer> rankCounts = getRankCounts(hand);
         return rankCounts.containsValue(3) && !rankCounts.containsValue(2);
     }
 
-    private static boolean isTwoPair(List<PokerCard> hand) {
+    private static boolean isTwoPair(PokerHand hand) {
         return getRankCounts(hand).values().stream().filter(count -> count == 2).count() == 2;
     }
 
-    private static boolean isOnePair(List<PokerCard> hand) {
+    private static boolean isOnePair(PokerHand hand) {
         Map<Rank, Integer> rankCounts = getRankCounts(hand);
         return rankCounts.containsValue(2) && !rankCounts.containsValue(3);
     }
 
-    private static Map<Rank, Integer> getRankCounts(List<PokerCard> hand) {
-        return hand.stream().collect(Collectors.groupingBy(Card::getRank, Collectors.summingInt(e -> 1)));
+    private static Map<Rank, Integer> getRankCounts(PokerHand hand) {
+        return hand.getCards().stream()
+                .collect(Collectors.groupingBy(Card::getRank, Collectors.summingInt(e -> 1)));
     }
 }

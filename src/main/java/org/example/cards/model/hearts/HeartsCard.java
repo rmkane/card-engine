@@ -20,4 +20,8 @@ public class HeartsCard implements Card {
     public String toString() {
         return CardUtils.formatCard(this);
     }
+
+    public static HeartsCard fromCardSymbol(String cardSymbol) {
+        return CardUtils.fromCardSymbol(cardSymbol, HeartsCard.class);
+    }
 }

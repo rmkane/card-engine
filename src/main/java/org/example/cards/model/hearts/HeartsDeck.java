@@ -1,12 +1,12 @@
 package org.example.cards.model.hearts;
 
-import org.example.cards.model.Deck;
+import org.example.cards.model.CardDeck;
 import org.example.cards.util.CardUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HeartsDeck implements Deck<HeartsCard> {
+public class HeartsDeck implements CardDeck<HeartsCard> {
     private final List<HeartsCard> cards;
 
     public HeartsDeck() {

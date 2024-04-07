@@ -19,7 +19,7 @@ public class App {
     }
 
     public static void playBlackjack() {
-        log.info("Playing Blackjack...");
+        log.info("\nPlaying Blackjack...");
         BlackjackEngine blackjack = new BlackjackEngine();
 
         List.of("Alice", "Bob", "Charlie", "David")
@@ -38,7 +38,7 @@ public class App {
     }
 
     public static void playPoker() {
-        log.info("Playing poker...");
+        log.info("\nPlaying poker...");
         PokerEngine poker = new PokerEngine();
 
         List.of("Alice", "Bob", "Charlie", "David")
@@ -49,6 +49,7 @@ public class App {
         poker.showHands();
         poker.evaluateHands();
         poker.showDiscardPile();
+        poker.showHands();
 
         poker.determineWinner()
                 .ifPresent(winner -> {
@@ -58,7 +59,7 @@ public class App {
     }
 
     public static void playHearts() {
-        log.info("Playing Hearts...");
+        log.info("\nPlaying Hearts...");
         HeartsEngine hearts = new HeartsEngine();
 
         List.of("Alice", "Bob", "Charlie", "David")

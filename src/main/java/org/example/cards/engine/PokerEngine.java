@@ -2,23 +2,26 @@ package org.example.cards.engine;
 
 import lombok.extern.slf4j.Slf4j;
 import org.example.cards.model.Card;
-import org.example.cards.model.Deck;
+import org.example.cards.model.CardDeck;
 import org.example.cards.model.poker.PokerCard;
 import org.example.cards.model.poker.PokerDeck;
+import org.example.cards.model.poker.PokerHand;
 import org.example.cards.model.poker.PokerPlayer;
+import org.example.cards.model.poker.PokerPlayerComparator;
 import org.example.cards.util.CardUtils;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-public class PokerEngine implements CardEngine<PokerCard, PokerPlayer> {
+public class PokerEngine implements CardEngine<PokerCard, PokerHand, PokerPlayer> {
     private static final int HAND_SIZE = 5;
 
+    private static final PokerPlayerComparator playerComparator = new PokerPlayerComparator();
+
     private final List<PokerPlayer> players;
-    private final Deck<PokerCard> deck;
+    private final CardDeck<PokerCard> deck;
     private final List<Card> discardPile;
 
     public PokerEngine() {
@@ -54,7 +57,7 @@ public class PokerEngine implements CardEngine<PokerCard, PokerPlayer> {
     public void showHands() {
         for (PokerPlayer player : players) {
             player.sortHand();
-            log.debug("{}'s hand: {}", player.getName(), player.showHand());
+            log.debug("{}'s hand: {} ({})", player.getName(), player.showHand(), player.evaluateHand().getDescription());
         }
     }
 
@@ -64,7 +67,7 @@ public class PokerEngine implements CardEngine<PokerCard, PokerPlayer> {
 
     @Override
     public Optional<PokerPlayer> determineWinner() {
-        return players.stream().max(Comparator.comparing(PokerPlayer::getHandRank));
+        return players.stream().max(playerComparator); // Get the first player with the best hand
     }
 
     public void evaluateHands() {

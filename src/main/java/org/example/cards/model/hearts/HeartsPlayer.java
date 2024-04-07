@@ -1,32 +1,33 @@
 package org.example.cards.model.hearts;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.example.cards.model.CardPlayer;
 import org.example.cards.util.CardUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Getter
-public class HeartsPlayer implements CardPlayer<HeartsCard> {
+public class HeartsPlayer implements CardPlayer<HeartsCard, HeartsHand> {
     private final static HeartsHandEvaluator handEvaluator = new HeartsHandEvaluator();
 
     private final String name;
-    private final List<HeartsCard> hand;
+    private final HeartsHand hand;
+
+    @Setter
+    private boolean dealer;
 
     public HeartsPlayer(String name) {
         this.name = name;
-        this.hand = new ArrayList<>();
+        this.hand = new HeartsHand();
     }
 
     @Override
     public void acceptCard(HeartsCard card) {
-        hand.add(card);
+        hand.addCard(card);
     }
 
     @Override
     public void discardCard(HeartsCard card) {
-        hand.remove(card);
+        hand.removeCard(card);
     }
 
     @Override

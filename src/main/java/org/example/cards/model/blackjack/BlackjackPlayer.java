@@ -1,27 +1,28 @@
 package org.example.cards.model.blackjack;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.example.cards.model.CardPlayer;
 import org.example.cards.util.CardUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Getter
-public class BlackjackPlayer implements CardPlayer<BlackjackCard> {
+public class BlackjackPlayer implements CardPlayer<BlackjackCard, BlackjackHand> {
     private final static BlackjackHandEvaluator handEvaluator = new BlackjackHandEvaluator();
 
     private final String name;
-    private final List<BlackjackCard> hand;
+    private final BlackjackHand hand;
+
+    @Setter
+    private boolean dealer;
 
     public BlackjackPlayer(String name) {
         this.name = name;
-        this.hand = new ArrayList<>();
+        this.hand = new BlackjackHand();
     }
 
     @Override
     public void acceptCard(BlackjackCard card) {
-        hand.add(card);
+        hand.addCard(card);
     }
 
     @Override

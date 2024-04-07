@@ -1,38 +1,41 @@
 package org.example.cards.model.poker;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.example.cards.model.CardPlayer;
 import org.example.cards.util.CardUtils;
 import org.example.cards.util.PokerUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class PokerPlayer implements CardPlayer<PokerCard> {
+public class PokerPlayer implements CardPlayer<PokerCard, PokerHand> {
     private final static PokerHandEvaluator handEvaluator = new PokerHandEvaluator();
 
     private final String name;
-    private final List<PokerCard> hand;
+    private final PokerHand hand;
+
+    @Setter
+    private boolean dealer;
 
     public PokerPlayer(String name) {
         this.name = name;
-        this.hand = new ArrayList<>();
+        this.hand = new PokerHand();
     }
 
     @Override
     public void acceptCard(PokerCard card) {
-        hand.add(card);
+        hand.addCard(card);
     }
 
     @Override
     public void discardCard(PokerCard card) {
-        hand.remove(card);
+        hand.removeCard(card);
     }
 
     @Override
     public void sortHand() {
-        CardUtils.sortHandBySuitThenRank(hand);
+        hand.sort();
     }
 
     @Override

@@ -20,4 +20,8 @@ public class BlackjackCard implements Card {
     public String toString() {
         return CardUtils.formatCard(this);
     }
+
+    public static BlackjackCard fromCardSymbol(String cardSymbol) {
+        return CardUtils.fromCardSymbol(cardSymbol, BlackjackCard.class);
+    }
 }

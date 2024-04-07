@@ -2,12 +2,10 @@ package org.example.cards.model.hearts;
 
 import org.example.cards.model.CardHandEvaluator;
 
-import java.util.List;
-
-public class HeartsHandEvaluator implements CardHandEvaluator<HeartsCard, Integer> {
+public class HeartsHandEvaluator implements CardHandEvaluator<HeartsCard, HeartsHand, Integer> {
     @Override
-    public Integer evaluateHand(List<HeartsCard> hand) {
-        return hand.stream()
+    public Integer evaluateHand(HeartsHand hand) {
+        return hand.getCards().stream()
                 .mapToInt(HeartsCard::getValue)
                 .sum();
     }

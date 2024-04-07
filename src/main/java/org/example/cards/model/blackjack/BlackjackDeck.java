@@ -1,12 +1,12 @@
 package org.example.cards.model.blackjack;
 
-import org.example.cards.model.Deck;
+import org.example.cards.model.CardDeck;
 import org.example.cards.util.CardUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlackjackDeck implements Deck<BlackjackCard> {
+public class BlackjackDeck implements CardDeck<BlackjackCard> {
     private final List<BlackjackCard> cards;
 
     public BlackjackDeck() {
