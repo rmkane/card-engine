@@ -10,7 +10,7 @@ public class PokerHandComparator implements Comparator<PokerHand> {
     public int compare(PokerHand hand1, PokerHand hand2) {
         // Compare hand types first
         int handTypeComparison = compareHandTypes(hand1, hand2);
-        if (handTypeComparison != 0) return handTypeComparison;
+        if (handTypeComparison != 0) return -handTypeComparison;
         return compareHandsByRank(hand1, hand2);
     }
 
@@ -26,7 +26,7 @@ public class PokerHandComparator implements Comparator<PokerHand> {
         // Compare the sorted hands card by card
         for (int i = 0; i < sortedHand1.size(); i++) {
             int cardComparison = compareHandsAtIndex(sortedHand1, sortedHand2, i);
-            if (cardComparison != 0) return cardComparison;
+            if (cardComparison != 0) return -cardComparison;
         }
 
         return 0; // Hands are equal

@@ -67,7 +67,7 @@ public class PokerEngine implements CardEngine<PokerCard, PokerHand, PokerPlayer
 
     @Override
     public Optional<PokerPlayer> determineWinner() {
-        return players.stream().max(playerComparator); // Get the first player with the best hand
+        return players.stream().min(playerComparator); // Get the first player with the best hand
     }
 
     public void evaluateHands() {
